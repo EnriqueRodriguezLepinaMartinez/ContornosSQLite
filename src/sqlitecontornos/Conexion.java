@@ -23,13 +23,24 @@ public class Conexion {
     Connection conexion;
     Statement consulta;
 
+    /**
+     * Constructor por defecto
+     */
     public Conexion() {
     }
 
+    /**
+     * Construcotr que recibe ruta como string.
+     * @param ruta 
+     */
     public Conexion(String ruta) {
         this.ruta = ruta;
     }
 
+    /**
+     * Metodo que conecta la base de datos.
+     * @return 
+     */
     public boolean conectar() {
         boolean buleano = false;
         try {
@@ -50,6 +61,13 @@ public class Conexion {
         return buleano;
     }
 
+    /**
+     * Metodo que registra usuarios.
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @return 
+     */
     public boolean insertar(String id, String nombre, String apellido) {
         boolean valor = true;
         conectar();
@@ -70,6 +88,10 @@ public class Conexion {
         return valor;
     }
 
+    /**
+     * Metodo que consulta la base de datos.
+     * @throws SQLException 
+     */
     public void consultar() throws SQLException {
         consulta = conexion.createStatement();
         ResultSet rs = consulta.executeQuery("select * from registro");
@@ -80,12 +102,24 @@ public class Conexion {
         }
     }
 
+    /**
+     * Metodo que elimina usuarios recibiendo la id.
+     * @param id
+     * @throws SQLException 
+     */
     public void eliminar(String id) throws SQLException {
         String query = "DELETE FROM REGISTRO WHERE id = " + id;
         PreparedStatement rs = conexion.prepareStatement(query);
         rs.execute();
     }
 
+    /**
+     * Método que modifica usuario.
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @throws SQLException 
+     */
     public void modificar(String id, String nombre, String apellido) throws SQLException {
         conectar();
         String sql = "update registro set id='" + id + "',nombre='" + nombre + "',apellido='" + apellido + "' where dni='" + id + "';";
